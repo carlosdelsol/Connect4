@@ -12,22 +12,16 @@ namespace Connect4
         static void Main(string[] args)
         {
             var grid = new Grid();
-            grid.InsertPosition(0, 2, Grid.Colors.Red);
-            grid.InsertPosition(5, 2, Grid.Colors.Red);
-            grid.InsertPosition(2, 4, Grid.Colors.Red);
-            grid.InsertPosition(3, 4, Grid.Colors.Red);
             grid.DrawGrid();
 
-            grid.analyzeDiagonal(Grid.Colors.Red);
-
-            while (true)
+            while (grid.finish==false)
             {
-                Console.WriteLine("("+ Player.ToString() +") - Select a column:");
+                Console.WriteLine("("+ Player.ToString().ToUpper() +") - Select a column:");
                 string column = Console.ReadLine();
                 if (CheckInt(column))
                 {
                     Console.Clear();
-                    grid.InsertToken(Int32.Parse(column), Player);
+                    grid.InsertToken(Int32.Parse(column)-1, Player);
                     TooglePlayer();
                     grid.DrawGrid();
                 }
@@ -55,7 +49,10 @@ namespace Connect4
             {
                 int icolumn;
                 isInt = Int32.TryParse(column, out icolumn);
-
+                if (Int32.Parse(column) > 0 && Int32.Parse(column) < 8)
+                    isInt = true;
+                else
+                    isInt = false;
             }
             catch
             {

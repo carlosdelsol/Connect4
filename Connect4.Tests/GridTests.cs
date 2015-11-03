@@ -159,6 +159,8 @@ namespace Connect4.Tests
             grid.InsertToken(3, Grid.Colors.Yellow);
             Assert.IsTrue(grid.checkAnalyze(0, Grid.Direction.Horizontal, Grid.Colors.Yellow));
         }
+
+
         [TestMethod]
         public void When_I_put_three_red_token_from_right_to_felt_diagonal_in_middle_down_part_Check_there_is_not_diagonal_combination()
         {
@@ -169,7 +171,7 @@ namespace Connect4.Tests
             Assert.IsFalse(grid.analyzeDiagonal(Grid.Colors.Red));
         }
         [TestMethod]
-        public void When_I_put_four_red_token_from_right_to_felt_diagonal_in_middle_down_part_Check_there_is_diagonal_combination()
+        public void When_I_put_four_red_token_from_right_to_left_diagonal_in_middle_down_part_Check_there_is_diagonal_combination()
         {
             var grid = new Grid();
             grid.InsertPosition(3, 0, Grid.Colors.Red);
@@ -214,6 +216,58 @@ namespace Connect4.Tests
             grid.InsertPosition(0, 2, Grid.Colors.Red);
             grid.InsertPosition(5, 2, Grid.Colors.Red);
             grid.InsertPosition(2, 4, Grid.Colors.Red);
+            grid.InsertPosition(3, 4, Grid.Colors.Red);
+            Assert.IsFalse(grid.analyzeDiagonal(Grid.Colors.Red));
+        }
+
+
+        [TestMethod]
+        public void When_I_put_three_red_token_from_left_to_right_diagonal_in_middle_down_part_Check_there_is_not_diagonal_combination()
+        {
+            var grid = new Grid();
+            grid.InsertPosition(3, 0, Grid.Colors.Red);
+            grid.InsertPosition(5, 2, Grid.Colors.Red);
+            grid.InsertPosition(6, 3, Grid.Colors.Red);
+            Assert.IsFalse(grid.analyzeDiagonal(Grid.Colors.Red));
+        }
+        [TestMethod]
+        public void When_I_put_four_red_token_from_left_to_right_diagonal_in_middle_down_part_Check_there_is_diagonal_combination()
+        {
+            var grid = new Grid();
+            grid.InsertPosition(0, 3, Grid.Colors.Red);
+            grid.InsertPosition(1, 2, Grid.Colors.Red);
+            grid.InsertPosition(2, 1, Grid.Colors.Red);
+            grid.InsertPosition(3, 0, Grid.Colors.Red);
+            Assert.IsTrue(grid.analyzeDiagonal(Grid.Colors.Red));
+        }
+        [TestMethod]
+        public void When_I_put_four_red_token_from_left_to_right_diagonal_in_middle_up_part_Check_there_is_diagonal_combination()
+        {
+            var grid = new Grid();
+            grid.InsertPosition(3, 5, Grid.Colors.Red);
+            grid.InsertPosition(4, 4, Grid.Colors.Red);
+            grid.InsertPosition(5, 3, Grid.Colors.Red);
+            grid.InsertPosition(6, 2, Grid.Colors.Red);
+            Assert.IsTrue(grid.analyzeDiagonal(Grid.Colors.Red));
+        }
+        [TestMethod]
+        public void When_I_put_four_red_token_from_left_to_right_diagonal_in_middle_up_part_Check_there_is_diagonal_combination_2()
+        {
+            var grid = new Grid();
+            grid.InsertPosition(6, 0, Grid.Colors.Red);
+            grid.InsertPosition(5, 1, Grid.Colors.Red);
+            grid.InsertPosition(4, 2, Grid.Colors.Red);
+            grid.InsertPosition(3, 3, Grid.Colors.Red);
+            Assert.IsTrue(grid.analyzeDiagonal(Grid.Colors.Red));
+        }
+
+        [TestMethod]
+        public void When_I_put_four_red_token_in_random_position_from_left_to_right_diagonal_in_middle_upper_part_Check_there_is_not_diagonal_combination()
+        {
+            var grid = new Grid();
+            grid.InsertPosition(0, 2, Grid.Colors.Red);
+            grid.InsertPosition(5, 2, Grid.Colors.Red);
+            grid.InsertPosition(1, 4, Grid.Colors.Red);
             grid.InsertPosition(3, 4, Grid.Colors.Red);
             Assert.IsFalse(grid.analyzeDiagonal(Grid.Colors.Red));
         }

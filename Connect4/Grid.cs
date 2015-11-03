@@ -11,7 +11,7 @@ namespace Connect4
         public States[,] Cells { get; set;}
         private int Rows { get;}
         private int Columns { get;}
-
+        public bool finish = false;
         public Grid() {
             Rows = 6;
             Columns = 7;
@@ -70,7 +70,14 @@ namespace Connect4
                     if (this.Cells[column, RowCount] == States.Empty)
                     {
                         this.Cells[column, RowCount] = ColorToState(colour);
-                        //analyzer(column, RowCount, colour);
+                        if (analyzer(column, RowCount, colour)) {
+                            DrawGrid();
+                            Console.WriteLine("***************");
+                            Console.WriteLine(colour.ToString() + " WINS");
+                            Console.WriteLine("***************");
+                            Console.ReadLine();
+                            finish = true;
+                        }
                         placeToken = true;
                     }
                     else
@@ -158,6 +165,38 @@ namespace Connect4
                     }
                 }
 
+                for (int col = 0; col < this.Columns; col++)
+                {
+                    int plusCol = 0;
+                    counter = 0;
+                    for (int ro = this.Rows - 1; ro >= 0; ro--)
+                    {
+                        if ((col + plusCol) < 7 && this.Cells[col + plusCol, ro] == ColorToState(colour))
+                        {
+                            counter++;
+                            if (counter == 4)
+                                return true;
+                        }
+                        plusCol++;
+                    }
+                }
+
+                for (int ro = this.Rows - 1; ro > 0; ro--)
+                {
+                    int plusRow = 0;
+                    counter = 0;
+                    for (int col = 0; col < this.Columns; col++)
+                    {
+                        if ((ro - plusRow) >= 0 && this.Cells[col, ro - plusRow] == ColorToState(colour))
+                        {
+                            counter++;
+                            if (counter == 4)
+                                return true;
+                        }
+                        plusRow++;
+                    }
+                }
+
                 return false;
             }
             catch {
@@ -172,6 +211,7 @@ namespace Connect4
 
         public void DrawGrid()
         {
+            Console.WriteLine(" = SUPER CONNECT 4 = ");
             for (int row = this.Rows-1; row >= 0; row--)
             {
                 for (int col = 0; col < this.Columns; col++)
