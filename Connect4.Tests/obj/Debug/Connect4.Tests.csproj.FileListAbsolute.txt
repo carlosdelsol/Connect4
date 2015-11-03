@@ -1,0 +1,9 @@
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\bin\Debug\Connect4.Tests.dll
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\bin\Debug\Connect4.Tests.pdb
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\bin\Debug\Connect4.exe
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\bin\Debug\Connect4.pdb
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\bin\Debug\es\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\obj\Debug\Connect4.Tests.csprojResolveAssemblyReference.cache
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\obj\Debug\Connect4.Tests.dll
+c:\Users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4.Tests\obj\Debug\Connect4.Tests.pdb
