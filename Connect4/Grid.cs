@@ -70,7 +70,7 @@ namespace Connect4
                     if (this.Cells[column, RowCount] == States.Empty)
                     {
                         this.Cells[column, RowCount] = ColorToState(colour);
-                        analyzer(column, RowCount, colour);
+                        //analyzer(column, RowCount, colour);
                         placeToken = true;
                     }
                     else
@@ -89,7 +89,8 @@ namespace Connect4
         public bool analyzer(int column, int row, Colors colour)
         {
             return (checkAnalyze(column, Direction.Vertical, colour) ||
-                    checkAnalyze(row, Direction.Horizontal, colour)) ? true : false;
+                    checkAnalyze(row, Direction.Horizontal, colour)  ||
+                    analyzeDiagonal(colour)) ? true : false;
         }
 
         public bool checkAnalyze(int columnOrRow,  Direction direction, Colors colour)
@@ -117,6 +118,78 @@ namespace Connect4
         private int getPositions(Direction direction)
         {
             return direction == Direction.Horizontal ? this.Columns : this.Rows;
+        }
+
+        public bool analyzeDiagonal(Colors colour)
+        {
+            int counter = 0;
+            try
+            {
+                for (int col = 0; col < this.Columns; col++)
+                {
+                    int plusCol = 0;
+                    counter = 0;
+                    for (int ro = 0; ro < this.Rows; ro++)
+                    {
+                        if ((col + plusCol) < this.Columns && this.Cells[col + plusCol, ro] == ColorToState(colour))
+                        {
+                            counter++;
+                            if (counter == 4)
+                                return true;
+                        }
+                        plusCol++;
+                    }
+                }
+
+
+                for (int ro = 0; ro <= this.Rows; ro++)
+                {
+                    int plusRow = 0;
+                    counter = 0;
+                    for (int col = 0; col <= this.Columns; col++)
+                    {
+                        if ((ro + plusRow) < this.Rows && this.Cells[col, ro + plusRow] == ColorToState(colour))
+                        {
+                            counter++;
+                            if (counter == 4)
+                                return true;
+                        }
+                        plusRow++;
+                    }
+                }
+
+                return false;
+            }
+            catch {
+                return false;
+            }
+        }
+
+        public void InsertPosition(int column, int row, Colors colour)
+        {
+            this.Cells[column, row] = ColorToState(colour);
+        }
+
+        public void DrawGrid()
+        {
+            for (int row = this.Rows-1; row >= 0; row--)
+            {
+                for (int col = 0; col < this.Columns; col++)
+                {
+                    Console.Write(" " + PrintCharacter(this.Cells[col, row]) + " ");
+                }
+                Console.Write("\n\n");
+            }
+        }
+
+        private string PrintCharacter(States color)
+        {
+            switch (color)
+            {
+                case States.Red: return "o";
+                case States.Yellow: return "*";
+                default: return "·";
+            }
         }
     }
 
