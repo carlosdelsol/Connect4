@@ -93,14 +93,14 @@ namespace Connect4.Tests
         {
             var grid = new Grid();
             grid.InsertToken(0, Grid.Colors.Red);
-            Assert.IsFalse(grid.analyzeVertical(0, Grid.Colors.Red));
+            Assert.IsFalse(grid.checkAnalyze(0, Grid.Direction.Vertical, Grid.Colors.Red));
         }
         [TestMethod]
         public void When_I_put_one_yellow_token_in_the_first_column_Check_if_there_is_not_vertical_combination_in_the_first_column()
         {
             var grid = new Grid();
             grid.InsertToken(0, Grid.Colors.Yellow);
-            Assert.IsFalse(grid.analyzeVertical(0, Grid.Colors.Yellow));
+            Assert.IsFalse(grid.checkAnalyze(0, Grid.Direction.Vertical, Grid.Colors.Yellow));
         }
         [TestMethod]
         public void When_I_put_one_red_token_in_the_first_column_Check_if_there_is_vertical_combination_in_the_first_column()
@@ -110,7 +110,7 @@ namespace Connect4.Tests
             grid.InsertToken(0, Grid.Colors.Red);
             grid.InsertToken(0, Grid.Colors.Red);
             grid.InsertToken(0, Grid.Colors.Red);
-            Assert.IsTrue(grid.analyzeVertical(0, Grid.Colors.Red));
+            Assert.IsTrue(grid.checkAnalyze(0, Grid.Direction.Vertical, Grid.Colors.Red));
         }
         [TestMethod]
         public void When_I_put_one_yellow_token_in_the_first_column_Check_if_there_is_vertical_combination_in_the_first_column()
@@ -120,7 +120,7 @@ namespace Connect4.Tests
             grid.InsertToken(0, Grid.Colors.Yellow);
             grid.InsertToken(0, Grid.Colors.Yellow);
             grid.InsertToken(0, Grid.Colors.Yellow);
-            Assert.IsTrue(grid.analyzeVertical(0, Grid.Colors.Yellow));
+            Assert.IsTrue(grid.checkAnalyze(0, Grid.Direction.Vertical, Grid.Colors.Yellow));
         }
 
         [TestMethod]
@@ -128,41 +128,34 @@ namespace Connect4.Tests
         {
             var grid = new Grid();
             grid.InsertToken(0, Grid.Colors.Red);
-            Assert.IsFalse(grid.analyzeHorinzontal(0, Grid.Colors.Red));
+            Assert.IsFalse(grid.checkAnalyze(0, Grid.Direction.Horizontal, Grid.Colors.Red));
         }
         [TestMethod]
         public void When_I_put_one_yellow_token_in_the_first_row_Check_if_there_is_not_horizontal_combination_in_the_first_column()
         {
             var grid = new Grid();
             grid.InsertToken(0, Grid.Colors.Yellow);
-            Assert.IsFalse(grid.analyzeHorinzontal(0, Grid.Colors.Yellow));
+            Assert.IsFalse(grid.checkAnalyze(0, Grid.Direction.Horizontal, Grid.Colors.Yellow));
         }
         [TestMethod]
         public void When_I_put_one_red_token_in_the_first_row_Check_if_there_is_horizontal_combination_in_the_first_column()
         {
             var grid = new Grid();
             grid.InsertToken(0, Grid.Colors.Red);
-            grid.InsertToken(0, Grid.Colors.Red);
-            grid.InsertToken(0, Grid.Colors.Red);
-            grid.InsertToken(0, Grid.Colors.Red);
-            Assert.IsTrue(grid.analyzeHorinzontal(0, Grid.Colors.Red));
+            grid.InsertToken(1, Grid.Colors.Red);
+            grid.InsertToken(2, Grid.Colors.Red);
+            grid.InsertToken(3, Grid.Colors.Red);
+            Assert.IsTrue(grid.checkAnalyze(0, Grid.Direction.Horizontal, Grid.Colors.Red));
         }
         [TestMethod]
         public void When_I_put_one_yellow_token_in_the_first_row_Check_if_there_is_horizontal_combination_in_the_first_column()
         {
             var grid = new Grid();
             grid.InsertToken(0, Grid.Colors.Yellow);
-            grid.InsertToken(0, Grid.Colors.Yellow);
-            grid.InsertToken(0, Grid.Colors.Yellow);
-            grid.InsertToken(0, Grid.Colors.Yellow);
-            Assert.IsTrue(grid.analyzeHorinzontal(0, Grid.Colors.Yellow));
+            grid.InsertToken(1, Grid.Colors.Yellow);
+            grid.InsertToken(2, Grid.Colors.Yellow);
+            grid.InsertToken(3, Grid.Colors.Yellow);
+            Assert.IsTrue(grid.checkAnalyze(0, Grid.Direction.Horizontal, Grid.Colors.Yellow));
         }
-        //[TestMethod]
-        //public void When_I_put_one_red_token_in_the_first_row_Check_if_there_is_not_diagonal_combination()
-        //{
-        //    var grid = new Grid();
-        //    grid.InsertToken(0, Grid.Colors.Red);
-        //    Assert.IsFalse(grid.analyzeDiagonal(0, 0, Grid.Colors.Red));
-        //}
     }
 }

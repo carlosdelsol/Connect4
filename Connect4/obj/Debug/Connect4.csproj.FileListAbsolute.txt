@@ -4,3 +4,9 @@ c:\users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4\bin\Deb
 c:\users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4\obj\Debug\Connect4.csprojResolveAssemblyReference.cache
 c:\users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4\obj\Debug\Connect4.exe
 c:\users\eit4397\documents\visual studio 2015\Projects\Connect4\Connect4\obj\Debug\Connect4.pdb
+C:\github\Connect4\Connect4\bin\Debug\Connect4.exe.config
+C:\github\Connect4\Connect4\obj\Debug\Connect4.exe
+C:\github\Connect4\Connect4\obj\Debug\Connect4.pdb
+C:\github\Connect4\Connect4\bin\Debug\Connect4.exe
+C:\github\Connect4\Connect4\bin\Debug\Connect4.pdb
+C:\github\Connect4\Connect4\obj\Debug\Connect4.csprojResolveAssemblyReference.cache

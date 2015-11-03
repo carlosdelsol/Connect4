@@ -11,8 +11,7 @@ namespace Connect4
         static void Main(string[] args)
         {
             var grid = new Grid();
-            grid.InsertToken(0, Grid.Colors.Yellow);
-            Grid.States state = grid.getCellStates(0, 0);
+
             Console.WriteLine("Hello World");
             Console.ReadLine();
         }

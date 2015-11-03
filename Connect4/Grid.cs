@@ -8,7 +8,7 @@ namespace Connect4
 {
     public class Grid
     {
-        public States[,] Cells { get;}
+        public States[,] Cells { get; set;}
         private int Rows { get;}
         private int Columns { get;}
 
@@ -27,6 +27,11 @@ namespace Connect4
         public enum Colors {
             Red,
             Yellow
+        }
+
+        public enum Direction {
+            Horizontal,
+            Vertical
         }
 
         public States getCellStates(int column, int row)
@@ -65,6 +70,7 @@ namespace Connect4
                     if (this.Cells[column, RowCount] == States.Empty)
                     {
                         this.Cells[column, RowCount] = ColorToState(colour);
+                        analyzer(column, RowCount, colour);
                         placeToken = true;
                     }
                     else
@@ -82,15 +88,17 @@ namespace Connect4
 
         public bool analyzer(int column, int row, Colors colour)
         {
-            return (analyzeVertical(column, colour) || analyzeHorinzontal(row, colour)) ? true : false;
+            return (checkAnalyze(column, Direction.Vertical, colour) ||
+                    checkAnalyze(row, Direction.Horizontal, colour)) ? true : false;
         }
 
-        public bool analyzeVertical(int column, Colors colour)
+        public bool checkAnalyze(int columnOrRow,  Direction direction, Colors colour)
         {
-            int counter = 0;
-            for (int currentRow = 0; currentRow < this.Rows; currentRow++)
+            int counter = 0, positions = getPositions(direction);
+
+            for (int currentPosition = 0; currentPosition < positions; currentPosition++)
             {
-                if (Cells[column, currentRow] == ColorToState(colour))
+                if (getCurrentColor(columnOrRow, direction, currentPosition) == ColorToState(colour))
                 {
                     counter++;
                     if (counter == 4)
@@ -101,20 +109,15 @@ namespace Connect4
             return false;
         }
 
-        public bool analyzeHorinzontal(int row, Colors colour)
+        private States getCurrentColor(int columnOrRow, Direction direction, int currentPosition)
         {
-            int counter = 0;
-            for (int currentColumn = 0; currentColumn < this.Columns; currentColumn++)
-            {
-                if (Cells[currentColumn, row] == ColorToState(colour))
-                {
-                    counter++;
-                    if (counter == 4)
-                        return true;
-                }
-                else counter = 0;
-            }
-            return false;
+            return (direction == Direction.Horizontal) ? getCellStates(currentPosition, columnOrRow) : getCellStates(columnOrRow, currentPosition);
+        }
+
+        private int getPositions(Direction direction)
+        {
+            return direction == Direction.Horizontal ? this.Columns : this.Rows;
         }
     }
+
 }
