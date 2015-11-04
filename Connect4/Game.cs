@@ -8,42 +8,66 @@ namespace Connect4
 {
     class Game
     {
-        private static Grid.Colors Player = Grid.Colors.Red;
+        private static Player playerRed, playerYellow, currentPlayer;
+        private static Grid grid = new Grid();
+        private static Printer printer = new Printer();
+
         static void Main(string[] args)
         {
-            var grid = new Grid();
-            grid.drawGrid();
+            grid.showMessage(Grid.States.AwaitingYellow);
+            playerYellow = new Player(printer.ReadScreen(), Grid.Colors.Yellow);
+            currentPlayer = playerYellow;
 
-            while (grid.finish==false)
-            {
-                grid.showMessage(Player, Grid.States.SelectAColumn);
-                string column = Console.ReadLine();
+            grid.showMessage(Grid.States.AwaitingRed);
+            playerRed = new Player(printer.ReadScreen(), Grid.Colors.Red);
 
-                Console.Clear();
-                tryInsertToken(grid, column);
-                grid.drawGrid();
-            }
+            printer.ClearScreen();
+            startGame();
         }
 
-        private static void tryInsertToken(Grid grid, string column)
+        private static void startGame()
+        {
+            grid.drawGrid();
+            while (grid.finish == false)
+            {
+                grid.showMessage(currentPlayer.Name, Grid.States.SelectAColumn);
+                string column = printer.ReadScreen();
+
+                printer.ClearScreen();
+                tryInsertToken(column);
+            }
+
+            finishGame();
+        }
+
+        private static void finishGame()
+        {
+            printer.PrintLine("***************");
+            grid.showMessage(currentPlayer.Name, Grid.States.Win);
+            printer.PrintLine("***************");
+            printer.ReadScreen();
+        }
+
+        private static void tryInsertToken(string column)
         {
             if (grid.checkInt(column))
             {
-                grid.insertToken(Int32.Parse(column) - 1, Player);
-                TooglePlayer();
+                grid.insertToken(Int32.Parse(column) - 1, currentPlayer.colour);
+                if(grid.finish == false) TooglePlayer();
             }
             else
             {
+                printer.ClearScreen();
                 grid.showMessage(Grid.States.InvalidCharacter);
             }
         }
 
         private static void TooglePlayer()
         {
-            if (Player == Grid.Colors.Red)
-                Player = Grid.Colors.Yellow;
+            if (currentPlayer.colour == Grid.Colors.Red)
+               currentPlayer = playerYellow;
             else
-                Player = Grid.Colors.Red;
+               currentPlayer = playerRed;
         }
 
     }

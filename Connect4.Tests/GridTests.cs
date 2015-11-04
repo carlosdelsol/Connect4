@@ -282,6 +282,7 @@ namespace Connect4.Tests
             var grid = new Grid();
             Assert.AreEqual(grid.showMessage(Grid.States.FullGrid), "The grid is full. Nobody wins.");
         }
+
         [TestMethod]
         public void When_state_select_columns_and_color_is_Red_print_message_in_screen()
         {
@@ -306,39 +307,36 @@ namespace Connect4.Tests
             var grid = new Grid();
             Assert.AreEqual(grid.showMessage(Grid.Colors.Yellow, Grid.States.Win), "(YELLOW) - WINS!");
         }
+        [TestMethod]
+        public void When_state_is_AwaitingRed_print_message_in_screen()
+        {
+            var grid = new Grid();
+            Assert.AreEqual(grid.showMessage(Grid.States.AwaitingRed), "Awaiting Red");
+        }
+        [TestMethod]
+        public void When_state_is_AwaitingYellow_print_message_in_screen()
+        {
+            var grid = new Grid();
+            Assert.AreEqual(grid.showMessage(Grid.States.AwaitingYellow), "Awaiting Yellow");
+        }
 
-        //[TestMethod]
-        //public void When_I_put_a_token_in_the_minus_one_it_is_impossible()
-        //{
-        //    var grid = new Grid();
-        //    grid.insertToken(-1, Grid.Colors.Red);
-        //    Assert.AreEqual(Grid.States.OutOfRange, grid.getCellStates(-1, 0));
-        //}
-        //[TestMethod]
-        //public void When_I_put_a_token_in_the_bigger_six_column_it_is_impossible()
-        //{
-        //    var grid = new Grid();
-        //    grid.insertToken(7, Grid.Colors.Red);
-        //    Assert.AreEqual(Grid.States.OutOfRange, grid.getCellStates(7, 0));
-        //}
 
-        //[TestMethod]
-        //public void When_you_insert_a_column_minus_than_one_out_of_range_message_appears()
-        //{
-        //    var mock = NSubstitute.Substitute.For<Grid>();
-        //    var grid = new Grid();
-        //    grid.insertToken(-1, Grid.Colors.Red);
+        [TestMethod]
+        public void When_A_Bigger_Limit_Is_Inputed_A_Message_Is_Shown()
+        {
+            var mock = Substitute.For<IPrinter>();
+            var grid = new Grid(mock);
+            grid.insertToken(8, Grid.Colors.Red);
+            mock.Received().PrintLine("Please, write a number between 1 to 7");
+        }
 
-        //    mock.Received().showMessage(Grid.States.OutOfRange);
-        //}
-        //[TestMethod]
-        //public void When_you_insert_a_column_bigger_than_seven_out_of_range_message_appears()
-        //{
-        //    var mock = NSubstitute.Substitute.For<Grid>();
-        //    var grid = new Grid();
-        //    grid.insertToken(8, Grid.Colors.Red);
-
-        //    mock.Received().showMessage(Grid.States.OutOfRange);
-        //}
+        [TestMethod]
+        public void When_A_Smaller_Limit_Is_Inputed_A_Message_Is_Shown()
+        {
+            var mock = Substitute.For<IPrinter>();
+            var grid = new Grid(mock);
+            grid.insertToken(-1, Grid.Colors.Red);
+            mock.Received().PrintLine("Please, write a number between 1 to 7");
+        }
     }
 }
