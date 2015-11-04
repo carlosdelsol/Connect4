@@ -16,3 +16,5 @@ C:\github\Connect4\Connect4.Tests\bin\Debug\es\Microsoft.VisualStudio.QualityToo
 C:\github\Connect4\Connect4.Tests\obj\Debug\Connect4.Tests.csprojResolveAssemblyReference.cache
 C:\github\Connect4\Connect4.Tests\obj\Debug\Connect4.Tests.dll
 C:\github\Connect4\Connect4.Tests\obj\Debug\Connect4.Tests.pdb
+C:\github\Connect4\Connect4.Tests\bin\Debug\NSubstitute.dll
+C:\github\Connect4\Connect4.Tests\bin\Debug\NSubstitute.xml

@@ -12,25 +12,29 @@ namespace Connect4
         static void Main(string[] args)
         {
             var grid = new Grid();
-            grid.DrawGrid();
+            grid.drawGrid();
 
             while (grid.finish==false)
             {
-                Console.WriteLine("("+ Player.ToString().ToUpper() +") - Select a column:");
+                grid.showMessage(Player, Grid.States.SelectAColumn);
                 string column = Console.ReadLine();
-                if (CheckInt(column))
-                {
-                    Console.Clear();
-                    grid.InsertToken(Int32.Parse(column)-1, Player);
-                    TooglePlayer();
-                    grid.DrawGrid();
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Please, write a number between 1 to 7");
-                    grid.DrawGrid();
-                }
+
+                Console.Clear();
+                tryInsertToken(grid, column);
+                grid.drawGrid();
+            }
+        }
+
+        private static void tryInsertToken(Grid grid, string column)
+        {
+            if (grid.checkInt(column))
+            {
+                grid.insertToken(Int32.Parse(column) - 1, Player);
+                TooglePlayer();
+            }
+            else
+            {
+                grid.showMessage(Grid.States.InvalidCharacter);
             }
         }
 
@@ -42,23 +46,5 @@ namespace Connect4
                 Player = Grid.Colors.Red;
         }
 
-        private static bool CheckInt(string column)
-        {
-            bool isInt = false;
-            try
-            {
-                int icolumn;
-                isInt = Int32.TryParse(column, out icolumn);
-                if (Int32.Parse(column) > 0 && Int32.Parse(column) < 8)
-                    isInt = true;
-                else
-                    isInt = false;
-            }
-            catch
-            {
-                Console.WriteLine("Please, write a number between 1 to 7");
-            }
-            return isInt;
-        }
     }
 }

@@ -22,7 +22,11 @@ namespace Connect4
             Red,
             Yellow,
             OutOfRange,
-            FullColumn
+            FullColumn,
+            InvalidCharacter,
+            FullGrid,
+            SelectAColumn,
+            Win
         }
         public enum Colors {
             Red,
@@ -36,14 +40,14 @@ namespace Connect4
 
         public States getCellStates(int column, int row)
         {
-            if (!CheckColumn(column))
-                    return States.OutOfRange;
-            else if (!CheckRow(row))
+            if (!checkColumn(column))
+                return States.OutOfRange;
+            else if (!checkRow(row))
                 return States.FullColumn;
             return Cells[column,row];
         }
 
-        public bool CheckColumn(int column)
+        public bool checkColumn(int column)
         {
             if (column >= 0 && column < this.Columns)
                 return true;
@@ -51,7 +55,28 @@ namespace Connect4
                 return false;
         }
 
-        public bool CheckRow(int row)
+        public bool checkInt(string column)
+        {
+            bool isInt = false;
+            try
+            {
+                int icolumn;
+                isInt = Int32.TryParse(column, out icolumn);
+                if (Int32.Parse(column) > 0 && Int32.Parse(column) < 8)
+                    isInt = true;
+                else
+                    isInt = false;
+            }
+            catch
+            {
+                Console.Clear();
+                showMessage(States.InvalidCharacter);
+                drawGrid();
+            }
+            return isInt;
+        }
+
+        public bool checkRow(int row)
         {
             if (row >= this.Rows)
                 return false;
@@ -59,9 +84,9 @@ namespace Connect4
                 return true;
         }
 
-        public void InsertToken(int column, Colors colour)
+        public void insertToken(int column, Colors colour)
         {
-            if (CheckColumn(column))
+            if (checkColumn(column))
             {
                 bool placeToken = false;
                 int RowCount = 0;
@@ -69,11 +94,12 @@ namespace Connect4
                 {
                     if (this.Cells[column, RowCount] == States.Empty)
                     {
-                        this.Cells[column, RowCount] = ColorToState(colour);
-                        if (analyzer(column, RowCount, colour)) {
-                            DrawGrid();
+                        this.Cells[column, RowCount] = colorToState(colour);
+                        if (analyzer(column, RowCount, colour))
+                        {
+                            drawGrid();
                             Console.WriteLine("***************");
-                            Console.WriteLine(colour.ToString() + " WINS");
+                            this.showMessage(colour, States.Win);
                             Console.WriteLine("***************");
                             Console.ReadLine();
                             finish = true;
@@ -86,9 +112,14 @@ namespace Connect4
                     }
                 }
             }
+            else {
+                Console.Clear();
+                showMessage(States.OutOfRange);
+                drawGrid();
+            }
         }
 
-        private static States ColorToState(Colors colour)
+        private static States colorToState(Colors colour)
         {
             return colour == Colors.Red ? States.Red : States.Yellow;
         }
@@ -106,7 +137,7 @@ namespace Connect4
 
             for (int currentPosition = 0; currentPosition < positions; currentPosition++)
             {
-                if (getCurrentColor(columnOrRow, direction, currentPosition) == ColorToState(colour))
+                if (getCurrentColor(columnOrRow, direction, currentPosition) == colorToState(colour))
                 {
                     counter++;
                     if (counter == 4)
@@ -138,7 +169,7 @@ namespace Connect4
                     counter = 0;
                     for (int ro = 0; ro < this.Rows; ro++)
                     {
-                        if ((col + plusCol) < this.Columns && this.Cells[col + plusCol, ro] == ColorToState(colour))
+                        if ((col + plusCol) < this.Columns && this.Cells[col + plusCol, ro] == colorToState(colour))
                         {
                             counter++;
                             if (counter == 4)
@@ -155,7 +186,7 @@ namespace Connect4
                     counter = 0;
                     for (int col = 0; col <= this.Columns; col++)
                     {
-                        if ((ro + plusRow) < this.Rows && this.Cells[col, ro + plusRow] == ColorToState(colour))
+                        if ((ro + plusRow) < this.Rows && this.Cells[col, ro + plusRow] == colorToState(colour))
                         {
                             counter++;
                             if (counter == 4)
@@ -171,7 +202,7 @@ namespace Connect4
                     counter = 0;
                     for (int ro = this.Rows - 1; ro >= 0; ro--)
                     {
-                        if ((col + plusCol) < 7 && this.Cells[col + plusCol, ro] == ColorToState(colour))
+                        if ((col + plusCol) < 7 && this.Cells[col + plusCol, ro] == colorToState(colour))
                         {
                             counter++;
                             if (counter == 4)
@@ -187,7 +218,7 @@ namespace Connect4
                     counter = 0;
                     for (int col = 0; col < this.Columns; col++)
                     {
-                        if ((ro - plusRow) >= 0 && this.Cells[col, ro - plusRow] == ColorToState(colour))
+                        if ((ro - plusRow) >= 0 && this.Cells[col, ro - plusRow] == colorToState(colour))
                         {
                             counter++;
                             if (counter == 4)
@@ -204,25 +235,25 @@ namespace Connect4
             }
         }
 
-        public void InsertPosition(int column, int row, Colors colour)
+        public void insertPosition(int column, int row, Colors colour)
         {
-            this.Cells[column, row] = ColorToState(colour);
+            this.Cells[column, row] = colorToState(colour);
         }
 
-        public void DrawGrid()
+        public void drawGrid()
         {
             Console.WriteLine(" = SUPER CONNECT 4 = ");
             for (int row = this.Rows-1; row >= 0; row--)
             {
                 for (int col = 0; col < this.Columns; col++)
                 {
-                    Console.Write(" " + PrintCharacter(this.Cells[col, row]) + " ");
+                    Console.Write(" " + printCharacter(this.Cells[col, row]) + " ");
                 }
                 Console.Write("\n\n");
             }
         }
 
-        private string PrintCharacter(States color)
+        private string printCharacter(States color)
         {
             switch (color)
             {
@@ -230,6 +261,50 @@ namespace Connect4
                 case States.Yellow: return "*";
                 default: return "·";
             }
+        }
+
+        public string showMessage(States state)
+        {
+            string message = string.Empty;
+            switch (state)
+            {
+                case States.OutOfRange:
+                    message = "Please, write a number between 1 to 7";
+                    break;
+                case States.InvalidCharacter:
+                    message = "Invalid character. Please, write a number between 1 to 7";
+                    break;
+                case States.FullColumn:
+                    message = "This column is full, try another column";
+                    break;
+                case States.FullGrid:
+                    message = "The grid is full. Nobody wins.";
+                    break;
+                default:
+                    message = string.Empty;
+                    break;
+            }
+            Console.WriteLine(message);
+            return message;
+        }
+
+        public string showMessage(Colors colour, States selectAColumn)
+        {
+            string message = string.Empty;
+            switch (selectAColumn)
+            {
+                case States.SelectAColumn:
+                    message = "("+ colour.ToString().ToUpper() + ") - Select a column [1-7]:";
+                    break;
+                case States.Win:
+                    message = "(" + colour.ToString().ToUpper() + ") - WINS!";
+                    break;
+                default:
+                    message = string.Empty;
+                    break;
+            }
+            Console.WriteLine(message);
+            return message;
         }
     }
 
