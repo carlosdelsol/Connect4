@@ -1,2 +1,6 @@
 /vs
+Connect4/Connect4/bin/**/
+Connect4/Connect4/obj**/
+Connect4/Connect4.Tests/bin**/
+Connect4/Connect4.Tests/obj**/
 **/bin

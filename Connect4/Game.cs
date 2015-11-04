@@ -42,9 +42,9 @@ namespace Connect4
 
         private static void finishGame()
         {
-            printer.PrintLine("***************");
+            printer.PrintLine("****************");
             grid.showMessage(currentPlayer.Name, Grid.States.Win);
-            printer.PrintLine("***************");
+            printer.PrintLine("****************");
             printer.ReadScreen();
         }
 
@@ -53,12 +53,13 @@ namespace Connect4
             if (grid.checkInt(column))
             {
                 grid.insertToken(Int32.Parse(column) - 1, currentPlayer.colour);
-                if(grid.finish == false) TooglePlayer();
+                if (grid.finish == false && grid.checkColumn(Int32.Parse(column)-1)) TooglePlayer();
             }
             else
             {
                 printer.ClearScreen();
                 grid.showMessage(Grid.States.InvalidCharacter);
+                grid.drawGrid();
             }
         }
 
